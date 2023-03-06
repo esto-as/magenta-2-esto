@@ -1,0 +1,273 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Zaproo Co.
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the EULA
+ * that is bundled with this package in the file LICENSE.txt.
+ *
+ * =================================================================
+ *                 MAGENTO EDITION USAGE NOTICE
+ * =================================================================
+ * This package designed for Magento COMMUNITY edition
+ * Zaproo does not guarantee correct work of this extension
+ * on any other Magento edition except Magento COMMUNITY edition.
+ * Zaproo does not provide extension support in case of
+ * incorrect edition usage.
+ * =================================================================
+ *
+ * @category   Zaproo
+ * @package    Esto_HirePurchase
+ * @version    1.0.2
+ * @copyright  Copyright (c) Zaproo Co. (http://www.zaproo.com)
+ */
+-->
+
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <preference for="Esto\HirePurchase\Api\Data\BankInterface" type="Esto\HirePurchase\Model\BankLinks\Data\Bank"/>
+    <preference for="Esto\HirePurchase\Api\BankRepositoryInterface" type="Esto\HirePurchase\Model\BankLinks\BankRepository"/>
+    <preference for="Esto\HirePurchase\Api\DataInterface" type="Esto\HirePurchase\Model\DataModel"/>
+
+    <!-- Payment Method Facade configuration -->
+    <virtualType name="EstoPaymentGatewayFacade" type="Magento\Payment\Model\Method\Adapter">
+        <arguments>
+            <argument name="code" xsi:type="const">\Esto\HirePurchase\Model\Ui\ConfigProvider::CODE</argument>
+            <argument name="infoBlockType" xsi:type="string">Magento\Payment\Block\ConfigurableInfo</argument>
+            <argument name="formBlockType" xsi:type="string">Magento\Payment\Block\Form</argument>
+            <argument name="valueHandlerPool" xsi:type="object">EstoPaymentGatewayValueHandlerPool</argument>
+            <argument name="commandPool" xsi:type="object">EstoPaymentGatewayCommandPool</argument>
+        </arguments>
+    </virtualType>
+
+    <!-- Pay Later Payment Method Facade configuration -->
+    <virtualType name="EstoPaymentGatewayFacadePayLater" type="Magento\Payment\Model\Method\Adapter">
+        <arguments>
+            <argument name="code" xsi:type="const">\Esto\HirePurchase\Model\Ui\ConfigProvider::CODE_PAY_LATER</argument>
+            <argument name="infoBlockType" xsi:type="string">Magento\Payment\Block\ConfigurableInfo</argument>
+            <argument name="formBlockType" xsi:type="string">Magento\Payment\Block\Form</argument>
+            <argument name="valueHandlerPool" xsi:type="object">EstoPayLaterPaymentGatewayValueHandlerPool</argument>
+            <argument name="commandPool" xsi:type="object">EstoPaymentGatewayCommandPool</argument>
+        </arguments>
+    </virtualType>
+
+    <!-- Esto X Payment Method Facade configuration -->
+    <virtualType name="EstoPaymentGatewayFacadeX" type="Magento\Payment\Model\Method\Adapter">
+        <arguments>
+            <argument name="code" xsi:type="const">\Esto\HirePurchase\Model\Ui\ConfigProvider::CODE_X</argument>
+            <argument name="infoBlockType" xsi:type="string">Magento\Payment\Block\ConfigurableInfo</argument>
+            <argument name="formBlockType" xsi:type="string">Magento\Payment\Block\Form</argument>
+            <argument name="valueHandlerPool" xsi:type="object">EstoXPaymentGatewayValueHandlerPool</argument>
+            <argument name="commandPool" xsi:type="object">EstoPaymentGatewayCommandPool</argument>
+        </arguments>
+    </virtualType>
+
+    <!-- Esto Pay Payment Method Facade configuration -->
+    <virtualType name="EstoPaymentGatewayFacadePay" type="Magento\Payment\Model\Method\Adapter">
+        <arguments>
+            <argument name="code" xsi:type="const">\Esto\HirePurchase\Model\Ui\ConfigProvider::CODE_PAY</argument>
+            <argument name="infoBlockType" xsi:type="string">Magento\Payment\Block\ConfigurableInfo</argument>
+            <argument name="formBlockType" xsi:type="string">Magento\Payment\Block\Form</argument>
+            <argument name="valueHandlerPool" xsi:type="object">EstoPayPaymentGatewayValueHandlerPool</argument>
+            <argument name="commandPool" xsi:type="object">EstoPaymentGatewayCommandPool</argument>
+        </arguments>
+    </virtualType>
+
+    <!-- Esto Pay Card Payment Method Facade configuration -->
+    <virtualType name="EstoPaymentGatewayFacadeCard" type="Magento\Payment\Model\Method\Adapter">
+        <arguments>
+            <argument name="code" xsi:type="const">\Esto\HirePurchase\Model\Ui\ConfigProvider::CODE_PAY_CARD</argument>
+            <argument name="infoBlockType" xsi:type="string">Magento\Payment\Block\ConfigurableInfo</argument>
+            <argument name="formBlockType" xsi:type="string">Magento\Payment\Block\Form</argument>
+            <argument name="valueHandlerPool" xsi:type="object">EstoPayCardPaymentGatewayValueHandlerPool</argument>
+            <argument name="commandPool" xsi:type="object">EstoPaymentGatewayCommandPool</argument>
+        </arguments>
+    </virtualType>
+
+    <!-- Configuration reader -->
+    <virtualType name="EstoPaymentGatewayConfig" type="Magento\Payment\Gateway\Config\Config">
+        <arguments>
+            <argument name="methodCode" xsi:type="const">\Esto\HirePurchase\Model\Ui\ConfigProvider::CODE</argument>
+        </arguments>
+    </virtualType>
+    <virtualType name="EstoXPaymentGatewayConfig" type="Magento\Payment\Gateway\Config\Config">
+        <arguments>
+            <argument name="methodCode" xsi:type="const">\Esto\HirePurchase\Model\Ui\ConfigProvider::CODE_X</argument>
+        </arguments>
+    </virtualType>
+    <virtualType name="EstoPayLaterPaymentGatewayConfig" type="Magento\Payment\Gateway\Config\Config">
+        <arguments>
+            <argument name="methodCode" xsi:type="const">\Esto\HirePurchase\Model\Ui\ConfigProvider::CODE_PAY_LATER</argument>
+        </arguments>
+    </virtualType>
+    <virtualType name="EstoPayPaymentGatewayConfig" type="Magento\Payment\Gateway\Config\Config">
+        <arguments>
+            <argument name="methodCode" xsi:type="const">\Esto\HirePurchase\Model\Ui\ConfigProvider::CODE_PAY</argument>
+        </arguments>
+    </virtualType>
+    <virtualType name="EstoPayCardPaymentGatewayConfig" type="Magento\Payment\Gateway\Config\Config">
+        <arguments>
+            <argument name="methodCode" xsi:type="const">\Esto\HirePurchase\Model\Ui\ConfigProvider::CODE_PAY_CARD</argument>
+        </arguments>
+    </virtualType>
+
+    <!-- Logger, initialized with EstoPaymentGatewayConfig -->
+    <virtualType name="EstoPaymentGatewayLogger" type="Magento\Payment\Model\Method\Logger">
+        <arguments>
+            <argument name="config" xsi:type="object">EstoPaymentGatewayConfig</argument>
+            <argument name="logger" xsi:type="object">Esto\HirePurchase\Logger\Logger</argument>
+        </arguments>
+    </virtualType>
+
+    <!-- Esto Gateway Client -->
+    <type name="Esto\HirePurchase\Gateway\Http\Client\EstoClient">
+        <arguments>
+            <argument name="logger" xsi:type="object">EstoPaymentGatewayLogger</argument>
+        </arguments>
+    </type>
+
+    <!-- Commands infrastructure -->
+    <virtualType name="EstoPaymentGatewayCommandPool" type="Magento\Payment\Gateway\Command\CommandPool">
+        <arguments>
+            <argument name="commands" xsi:type="array">
+                <item name="initialize" xsi:type="string">EstoPaymentGatewayInitializeCommand</item>
+            </argument>
+        </arguments>
+    </virtualType>
+
+    <!-- Initialize command -->
+    <virtualType name="EstoPaymentGatewayInitializeCommand" type="Magento\Payment\Gateway\Command\GatewayCommand">
+        <arguments>
+            <argument name="requestBuilder" xsi:type="object">EstoPaymentGatewayInitializeRequest</argument>
+            <argument name="handler" xsi:type="object">EstoPaymentGatewayResponseHandlerComposite</argument>
+            <argument name="validator" xsi:type="object">Esto\HirePurchase\Gateway\Validator\Response\ResponseValidator</argument>
+            <argument name="transferFactory" xsi:type="object">Esto\HirePurchase\Gateway\Http\TransferFactory</argument>
+            <argument name="client" xsi:type="object">Esto\HirePurchase\Gateway\Http\Client\EstoClient</argument>
+        </arguments>
+    </virtualType>
+
+    <type name="Esto\HirePurchase\Gateway\Http\TransferFactory">
+        <arguments>
+            <argument name="config" xsi:type="object">EstoPaymentGatewayConfig</argument>
+        </arguments>
+    </type>
+
+    <!-- Request builder -->
+    <virtualType name="EstoPaymentGatewayInitializeRequest" type="Magento\Payment\Gateway\Request\BuilderComposite">
+        <arguments>
+            <argument name="builders" xsi:type="array">
+                <item name="config" xsi:type="string">Esto\HirePurchase\Gateway\Request\Builder\Config</item>
+                <item name="customer" xsi:type="string">Esto\HirePurchase\Gateway\Request\Builder\Customer</item>
+                <item name="items" xsi:type="string">Esto\HirePurchase\Gateway\Request\Builder\Items</item>
+            </argument>
+        </arguments>
+    </virtualType>
+
+    <!-- Response handlers -->
+    <virtualType name="EstoPaymentGatewayResponseHandlerComposite" type="Magento\Payment\Gateway\Response\HandlerChain">
+        <arguments>
+            <argument name="handlers" xsi:type="array">
+                <item name="default" xsi:type="string">Esto\HirePurchase\Gateway\Response\DefaultHandler</item>
+            </argument>
+        </arguments>
+    </virtualType>
+
+    <!-- Value handlers infrastructure -->
+    <virtualType name="EstoPaymentGatewayValueHandlerPool" type="Magento\Payment\Gateway\Config\ValueHandlerPool">
+        <arguments>
+            <argument name="handlers" xsi:type="array">
+                <item name="default" xsi:type="string">EstoPaymentGatewayConfigValueHandler</item>
+            </argument>
+        </arguments>
+    </virtualType>
+    <virtualType name="EstoPaymentGatewayConfigValueHandler" type="Magento\Payment\Gateway\Config\ConfigValueHandler">
+        <arguments>
+            <argument name="configInterface" xsi:type="object">EstoPaymentGatewayConfig</argument>
+        </arguments>
+    </virtualType>
+
+    <!-- Value handlers infrastructure for Esto X -->
+    <virtualType name="EstoXPaymentGatewayValueHandlerPool" type="Magento\Payment\Gateway\Config\ValueHandlerPool">
+        <arguments>
+            <argument name="handlers" xsi:type="array">
+                <item name="default" xsi:type="string">EstoXPaymentGatewayConfigValueHandler</item>
+            </argument>
+        </arguments>
+    </virtualType>
+    <virtualType name="EstoXPaymentGatewayConfigValueHandler" type="Magento\Payment\Gateway\Config\ConfigValueHandler">
+        <arguments>
+            <argument name="configInterface" xsi:type="object">EstoXPaymentGatewayConfig</argument>
+        </arguments>
+    </virtualType>
+
+    <!-- Value handlers infrastructure for Esto PayLater -->
+    <virtualType name="EstoPayLaterPaymentGatewayValueHandlerPool" type="Magento\Payment\Gateway\Config\ValueHandlerPool">
+        <arguments>
+            <argument name="handlers" xsi:type="array">
+                <item name="default" xsi:type="string">EstoPayLaterPaymentGatewayConfigValueHandler</item>
+            </argument>
+        </arguments>
+    </virtualType>
+    <virtualType name="EstoPayLaterPaymentGatewayConfigValueHandler" type="Magento\Payment\Gateway\Config\ConfigValueHandler">
+        <arguments>
+            <argument name="configInterface" xsi:type="object">EstoPayLaterPaymentGatewayConfig</argument>
+        </arguments>
+    </virtualType>
+
+    <!-- Value handlers infrastructure for Esto Pay -->
+    <virtualType name="EstoPayPaymentGatewayValueHandlerPool" type="Magento\Payment\Gateway\Config\ValueHandlerPool">
+        <arguments>
+            <argument name="handlers" xsi:type="array">
+                <item name="default" xsi:type="string">EstoPayPaymentGatewayConfigValueHandler</item>
+            </argument>
+        </arguments>
+    </virtualType>
+    <virtualType name="EstoPayPaymentGatewayConfigValueHandler" type="Magento\Payment\Gateway\Config\ConfigValueHandler">
+        <arguments>
+            <argument name="configInterface" xsi:type="object">EstoPayPaymentGatewayConfig</argument>
+        </arguments>
+    </virtualType>
+
+    <!-- Value handlers infrastructure for Esto Card -->
+    <virtualType name="EstoPayCardPaymentGatewayValueHandlerPool" type="Magento\Payment\Gateway\Config\ValueHandlerPool">
+        <arguments>
+            <argument name="handlers" xsi:type="array">
+                <item name="default" xsi:type="string">EstoPayCardPaymentGatewayConfigValueHandler</item>
+            </argument>
+        </arguments>
+    </virtualType>
+    <virtualType name="EstoPayCardPaymentGatewayConfigValueHandler" type="Magento\Payment\Gateway\Config\ConfigValueHandler">
+        <arguments>
+            <argument name="configInterface" xsi:type="object">EstoPayCardPaymentGatewayConfig</argument>
+        </arguments>
+    </virtualType>
+
+    <type name="Magento\Payment\Block\ConfigurableInfo">
+        <arguments>
+            <argument name="config" xsi:type="object">EstoPaymentGatewayConfig</argument>
+        </arguments>
+    </type>
+
+    <!-- Custom logger config -->
+    <type name="Esto\HirePurchase\Logger\Handler\Debug">
+        <arguments>
+            <argument name="filesystem" xsi:type="object">Magento\Framework\Filesystem\Driver\File</argument>
+        </arguments>
+    </type>
+    <type name="Esto\HirePurchase\Logger\Handler\Info">
+        <arguments>
+            <argument name="filesystem" xsi:type="object">Magento\Framework\Filesystem\Driver\File</argument>
+        </arguments>
+    </type>
+
+    <type name="Esto\HirePurchase\Logger\Logger">
+        <arguments>
+            <argument name="name" xsi:type="string">esto_logger</argument>
+            <argument name="handlers"  xsi:type="array">
+                <item name="system" xsi:type="object">Esto\HirePurchase\Logger\Handler\Info</item>
+                <item name="debug" xsi:type="object">Esto\HirePurchase\Logger\Handler\Debug</item>
+            </argument>
+        </arguments>
+    </type>
+</config>

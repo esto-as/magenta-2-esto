@@ -1,0 +1,260 @@
+<!--
+/**
+ * Zaproo Co.
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the EULA
+ * that is bundled with this package in the file LICENSE.txt.
+ *
+ * =================================================================
+ *                 MAGENTO EDITION USAGE NOTICE
+ * =================================================================
+ * This package designed for Magento COMMUNITY edition
+ * Zaproo does not guarantee correct work of this extension
+ * on any other Magento edition except Magento COMMUNITY edition.
+ * Zaproo does not provide extension support in case of
+ * incorrect edition usage.
+ * =================================================================
+ *
+ * @category   Zaproo
+ * @package    Esto_HirePurchase
+ * @version    1.0.2
+ * @copyright  Copyright (c) Zaproo Co. (http://www.zaproo.com)
+ */
+-->
+<div class="payment-method" data-bind="css: {'_active': (getCode() == isChecked())}">
+    <div style="display: none">
+        <span data-bind="attr: {title: $t('Buy now and pay later!')}"></span>
+        <span data-bind="attr: {title: $t('Pay in the bank')}"></span>
+        <span data-bind="attr: {title: $t('ESTO hire purchase')}"></span>
+        <span data-bind="attr: {title: $t('Pay 3 in equal parts. At no extra charge.')}"></span>
+        <span data-bind="attr: {title: $t('Pay by card (Visa/Mastercard)')}"></span>
+        <span data-bind="attr: {title: $t('Just confirm your order with 3 clicks and take your time! Pay later, within 30 days, without any extra fees!')}"></span>
+        <span data-bind="attr: {title: $t('Confirm a purchase in 60 seconds and pay in installments, conveniently and quickly. Just pay later!')}"></span>
+        <span data-bind="attr: {title: $t('ESTO 3 - pay without additional cost within 3 months! Just pay later.')}"></span>
+        <span data-bind="attr: {title: $t('Payment is made using a secure payment solution called KEVIN (UAB “KEVIN EU”), which is licensed by the Bank of Lithuania.')}"></span>
+        <span data-bind="attr: {title: $t('Payment is made using a secure payment solution.')}"></span>
+    </div>
+    <div class="payment-method-title field choice">
+        <input type="radio"
+               name="payment[method]"
+               class="radio"
+               data-bind="attr: {'id': getCode()}, value: getCode(), checked: isChecked, click: selectPaymentMethod, visible: isRadioButtonVisible()"/>
+        <label class="label esto" data-bind="attr: {'for': getCode()}">
+            <img data-bind="attr: {src: getLogoSrc()}" class="payment-icon esto"/>
+            <span data-bind="i18n: getTitle()"></span>
+        </label>
+
+        <!-- ko if: (isEstoPay() && showBanks() == 2) -->
+        <div class="payment-method-content-estopay">
+            <p data-bind="text: getDescription()"></p>
+            <!-- ko foreach: getRegion('messages') -->
+            <!-- ko template: getTemplate() --><!-- /ko -->
+            <!--/ko-->
+            <div class="banks-block">
+                <select afterRender="
+                    function(target, viewModel) {
+                        selectedCountry.subscribe(function() {
+                            window.checkoutConfig.payment.esto_pay.bank = undefined;
+                            jQuery('.country-blocks label>div.active').removeClass('active');
+                            isPlaceOrderActionAllowed(false);
+                        });
+                    }"
+                        id="estopay-payment-link-country-select"
+                        data-bind="options: getCountriesList(), value:selectedCountry">
+                </select>
+                <div data-bind="foreach: getBanks() ">
+                    <div class="country-blocks" data-bind="visible: country === $parent.selectedCountry(), attr: {id: country, name: $parent.selectedCountry}">
+                        <ul data-bind="attr: {class: $parent.getClass()}">
+                            <div data-bind="foreach: banks">
+                                <li>
+                                    <label data-bind="attr: {for: $data}">
+                                        <div data-bind="attr: {class: $data}, click: $parents[1].setBank"/>
+                                    </label>
+                                </li>
+                            </div>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="payment-method-billing-address">
+                <!-- ko foreach: $parent.getRegion(getBillingAddressFormName()) -->
+                <!-- ko template: getTemplate() --><!-- /ko -->
+                <!--/ko-->
+            </div>
+
+            <div class="field required agreement-selector" data-bind="visible: isEnabled() == 1">
+                <div class="control">
+                    <input type="checkbox" name="payment[accept_terms]" class="input-checkbox accept-terms"
+                           data-bind="attr: {id: 'accept_' + getCode() + '_terms'}, checked: false"/>
+                    <a data-bind="attr: {class: 'popup-' + getCode() + '-terms'}, text: getTermsLabel(), click: showPopupTerm(getCode())"></a>
+                    <div style="white-space: pre-line" data-bind="attr: {id: 'term_' + getCode()}, text: getTerms(), afterRender: initPopupTerm(getCode())" ></div>
+                    <div style="display: none" data-bind="attr: {id: getCode() + '_term-error-message'}">
+                        <label class="errorMessage" data-bind="text: getRequiredErrorMessage()" />
+                    </div>
+                </div>
+            </div>
+
+            <form id="esto-checkout-form" class="form">
+                <div class="actions-toolbar">
+                    <div class="primary">
+                        <button class="action primary checkout"
+                                type="submit"
+                                data-bind="
+                            click: placeOrderEsto,
+                            css: {disabled: !isPlaceOrderActionAllowed()},
+                            attr: {title: $t('Place Order')}
+                            ">
+                            <span data-bind="i18n: 'Place Order'"></span>
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <!-- /ko -->
+    </div>
+
+    <!-- ko if: isEstoX() -->
+    <div class="payment-method-content estox" data-bind="
+        attr: {title: $t('Just confirm your order with 3 clicks and take your time! Pay later, within 30 days, without any extra fees!')}
+    ">
+        <p data-bind="text: getDescription()"></p>
+        <!-- ko foreach: getRegion('messages') -->
+        <!-- ko template: getTemplate() --><!-- /ko -->
+        <!--/ko-->
+
+        <!-- ko if: getEstoXCalculatorEnabled() -->
+        <div class="payment-x-block">
+            <p class="esto-interest-label" data-bind="text: getLabel()"></p>
+            <div class="table">
+                <div class="payments-slice-1 esto-images" >
+                    <div class="price">
+                        <b data-bind="text: getFirstPayment() + ' €'"></b>
+                        <br/>
+                        <p data-bind="text: getMonth(2)"></p>
+                    </div>
+                </div>
+                <div class="divider esto-images" ></div>
+                <div class="payments-slice-2 esto-images" >
+                    <div class="price">
+                        <b data-bind="text: getSecondPayment() + ' €'"></b>
+                        <br/>
+                        <p data-bind="text: getMonth(3)"></p>
+                    </div>
+                </div>
+                <div class="divider esto-images" ></div>
+                <div class="payments-slice-3 esto-images" >
+                    <div class="price">
+                        <b data-bind="text: getThirdPayment() + ' €'"></b>
+                        <br/>
+                        <p data-bind="text: getMonth(4)"></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- /ko -->
+
+
+        <div class="payment-method-billing-address">
+            <!-- ko foreach: $parent.getRegion(getBillingAddressFormName()) -->
+            <!-- ko template: getTemplate() --><!-- /ko -->
+            <!--/ko-->
+        </div>
+
+        <form id="esto-checkout-form" class="form">
+            <div class="actions-toolbar">
+                <div class="primary">
+                    <button class="action primary checkout"
+                            type="submit"
+                            data-bind="
+                            click: placeOrderEsto,
+                            css: {disabled: !isPlaceOrderActionAllowed()},
+                            attr: {title: $t('Place Order')}
+                            ">
+                        <span data-bind="i18n: 'Place Order'"></span>
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+    <!-- /ko -->
+
+    <!-- ko if: ((!isEstoPay() || (isEstoPay() && showBanks() != 2)) && !isEstoX()) -->
+    <div class="payment-method-content" data-bind="
+        attr: {title: $t('Just confirm your order with 3 clicks and take your time! Pay later, within 30 days, without any extra fees!')}
+    ">
+        <p data-bind="text: getDescription()"></p>
+        <!-- ko foreach: getRegion('messages') -->
+        <!-- ko template: getTemplate() --><!-- /ko -->
+        <!--/ko-->
+        <!-- ko if: isEstoPay() && showBanks() == 1 -->
+        <div class="banks-block">
+            <select afterRender="
+                function(target, viewModel) {
+                    selectedCountry.subscribe(function() {
+                        window.checkoutConfig.payment.esto_pay.bank = undefined;
+                        jQuery('.country-blocks label>div.active').removeClass('active');
+                        isPlaceOrderActionAllowed(false);
+                    });
+                }"
+                    id="estopay-payment-link-country-select"
+                    data-bind="options: getCountriesList(), value:selectedCountry">
+            </select>
+            <div data-bind="foreach: getBanks() ">
+                <div class="country-blocks" data-bind="visible: country === $parent.selectedCountry(), attr: {id: country, name: $parent.selectedCountry}">
+                    <ul data-bind="attr: {class: $parent.getClass()}">
+                        <div data-bind="foreach: banks">
+                            <li>
+                                <label data-bind="attr: {for: $data.name}">
+                                    <div data-bind="
+                                    attr: {class: $data.name},
+                                    style: { backgroundImage: 'url(' + $data.logo + ')' },
+                                    click: $parents[1].setBank
+                                    "/>
+                                </label>
+                            </li>
+                        </div>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <!--/ko-->
+
+        <div class="payment-method-billing-address">
+            <!-- ko foreach: $parent.getRegion(getBillingAddressFormName()) -->
+            <!-- ko template: getTemplate() --><!-- /ko -->
+            <!--/ko-->
+        </div>
+
+        <div class="field required agreement-selector" data-bind="visible: isEnabled() == 1">
+            <div class="control">
+                <input type="checkbox" name="payment[accept_terms]" class="input-checkbox accept-terms"
+                       data-bind="attr: {id: 'accept_' + getCode() + '_terms'}, checked: false"/>
+                <a data-bind="attr: {class: 'popup-' + getCode() + '-terms'}, text: getTermsLabel(), click: showPopupTerm(getCode())"></a>
+                <div style="white-space: pre-line" data-bind="attr: {id: 'term_' + getCode()}, text: getTerms(), afterRender: initPopupTerm(getCode())" ></div>
+                <div style="display: none" data-bind="attr: {id: getCode() + '_term-error-message'}">
+                    <label class="errorMessage" data-bind="text: getRequiredErrorMessage()" />
+                </div>
+            </div>
+        </div>
+
+        <form id="esto-checkout-form" class="form">
+            <div class="actions-toolbar">
+                <div class="primary">
+                    <button class="action primary checkout"
+                            type="submit"
+                            data-bind="
+                            click: placeOrderEsto,
+                            css: {disabled: !isPlaceOrderActionAllowed()},
+                            attr: {title: $t('Place Order')}
+                            ">
+                        <span data-bind="i18n: 'Place Order'"></span>
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+    <!-- /ko -->
+</div>

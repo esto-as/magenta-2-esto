@@ -1,0 +1,50 @@
+<?php
+/**
+ * Zaproo Co.
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the EULA
+ * that is bundled with this package in the file LICENSE.txt.
+ *
+ * =================================================================
+ *                 MAGENTO EDITION USAGE NOTICE
+ * =================================================================
+ * This package designed for Magento COMMUNITY edition
+ * Zaproo does not guarantee correct work of this extension
+ * on any other Magento edition except Magento COMMUNITY edition.
+ * Zaproo does not provide extension support in case of
+ * incorrect edition usage.
+ * =================================================================
+ *
+ * @category   Zaproo
+ * @package    Esto_HirePurchase
+ * @version    1.0.8
+ * @copyright  Copyright (c) Zaproo Co. (http://www.zaproo.com)
+ */
+
+/**
+ * @var \Esto\HirePurchase\Block\MonthlyPaymentInfo $block
+ */
+?>
+<?php if ($title = $block->getTitle()): ?>
+    <div class="esto-monthly-payment">
+        <?php if ($block->getLogoUrl()): ?>
+            <?php if ($block->getRedirectUrl()): ?>
+                <a href="<?= $block->getRedirectUrl()?>" class="esto-redirect-url">
+                    <img src="<?= $block->getLogoUrl() ?>" alt="" class="esto-logo">
+                </a>
+            <?php else: ?>
+                <img src="<?= $block->getLogoUrl() ?>" alt="" class="esto-logo">
+            <?php endif; ?>
+        <?php endif; ?>
+
+        <?php if ($block->getRedirectUrl()): ?>
+            <a href="<?= $block->getRedirectUrl()?>" class="esto-redirect-url">
+                <span class="esto-title"><?= $title ?></span>
+            </a>
+        <?php else: ?>
+            <span class="esto-title"><?= $title ?></span>
+        <?php endif; ?>
+    </div>
+<?php endif; ?>

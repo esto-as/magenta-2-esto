@@ -1,0 +1,39 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Zaproo Co.
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the EULA
+ * that is bundled with this package in the file LICENSE.txt.
+ *
+ * =================================================================
+ *                 MAGENTO EDITION USAGE NOTICE
+ * =================================================================
+ * This package designed for Magento COMMUNITY edition
+ * Zaproo does not guarantee correct work of this extension
+ * on any other Magento edition except Magento COMMUNITY edition.
+ * Zaproo does not provide extension support in case of
+ * incorrect edition usage.
+ * =================================================================
+ *
+ * @category   Zaproo
+ * @package    Esto_HirePurchase
+ * @version    1.0.2
+ * @copyright  Copyright (c) Zaproo Co. (http://www.zaproo.com)
+ */
+-->
+
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <head>
+        <css src="Esto_HirePurchase::css/styles.css"/>
+    </head>
+    <body>
+        <referenceContainer name="product.info.extrahint">
+            <container name="esto-monthly-purchase-info-wrapper" label="Esto Monthly Purchase Info Block Container" after="-">
+                <block name="esto-monthly-purchase-info" class="Esto\HirePurchase\Block\MonthlyPaymentInfo" template="Esto_HirePurchase::catalog/product/view/monthly_purchase_info.phtml"/>
+            </container>
+        </referenceContainer>
+    </body>
+</page>

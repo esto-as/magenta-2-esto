@@ -1,0 +1,241 @@
+.esto-monthly-payment {
+    margin: 20px 0;
+    float: left;
+}
+
+.payment-method-content-estopay {
+    padding: 20px 0 20px 22px;
+}
+
+.esto-monthly-payment .esto-logo {
+    max-width: 200px;
+    display: block;
+    margin-bottom: 10px;
+}
+
+.esto-monthly-payment > .esto-redirect-url {
+    display: block;
+    margin-bottom: 10px;
+}
+
+.esto-monthly-payment > .esto-redirect-url:last-child {
+    margin-bottom: 0;
+}
+
+.esto-monthly-payment > .esto-redirect-url .esto-logo,
+.esto-monthly-payment > .esto-redirect-url .esto-title {
+    display: inline;
+    margin-bottom: 0;
+}
+
+.payment-icon.esto {
+    max-height: 38px;
+}
+
+label.errorMessage {
+    color: red;
+}
+
+.banks-block {
+    max-width: 500px;
+}
+
+.banks-block .country-blocks {
+    margin: 0 0 15px;
+}
+
+.banks-block .country-blocks.visible {
+    display: block;
+}
+
+.banks-block .country-blocks > ul {
+    list-style-type: none;
+    padding-inline-start: 0;
+    columns: 2;
+    -webkit-columns: 2;
+    -moz-columns: 2;
+}
+
+.banks-block .country-blocks > ul.columns1 {
+    list-style-type: none;
+    padding-inline-start: 0;
+    columns: 1;
+    -webkit-columns: 1;
+    -moz-columns: 1;
+}
+
+.banks-block .country-blocks > ul.columns2 {
+    list-style-type: none;
+    padding-inline-start: 0;
+    columns: 2;
+    -webkit-columns: 2;
+    -moz-columns: 2;
+}
+
+.banks-block .country-blocks > ul.columns3 {
+    list-style-type: none;
+    padding-inline-start: 0;
+    columns: 3;
+    -webkit-columns: 3;
+    -moz-columns: 3;
+}
+
+.banks-block .country-blocks > ul li {
+    display: inline-block;
+    width: 100%;
+}
+
+#estopay-payment-link-country-select {
+    margin-bottom: 15px;
+}
+
+.banks-block .country-blocks > ul > div > li > label > div {
+    height: 65px;
+    float: initial;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    background-size: 150px;
+    width: 150px;
+    border: 0.5px solid transparent;
+    cursor: pointer;
+}
+
+.banks-block .country-blocks > ul > div > li > label > div.active {
+    border: 0.5px solid grey;
+    background-color: #f4f4f4;
+}
+
+.banks-block .country-blocks > ul > div > li > label > div:hover {
+    background-color: #f4f4f4;
+}
+
+.banks-block .country-blocks.visibleClass {
+    display: block;
+}
+
+.payment-method .payment-method-title label.esto {
+    display: inline;
+}
+
+.payment-method-content.estox {
+    max-width: 750px;
+}
+.payment-method-content.estox .payment-method-billing-address {
+    margin-top: 20px;
+}
+
+.payment-method-content.estox fieldset,
+.payment-method-content.estox .checkout-billing-address .primary .action-update {
+    margin-bottom: 0;
+}
+
+.payment-method-content.estox #esto-checkout-form {
+    margin-top: 20px;
+}
+
+.payment-method-content.estox fieldset.address,
+.payment-method-content.estox fieldset.street,
+.payment-method-content.estox .payment-x-block p{
+    padding-left: 0px;
+}
+
+.payment-method-content.estox .checkout-billing-address {
+    margin: 0;
+}
+
+.payment-x-block {
+    display: table-cell;
+    vertical-align: middle;
+    text-align: center;
+    position: relative;
+    width: 490px;
+    padding-top: 20px;
+}
+
+.esto-interest-label {
+    position: absolute;
+    top: 20px;
+    margin: 0 auto;
+    left: 0;
+    right: 0;
+    margin-left: auto;
+    margin-right: auto;
+    font-size: 13px;
+}
+
+.payments-slice-1 {
+    background: url('../images/estox/1:3-Slice-big.svg');
+    width: 56px;
+    height: 56px;
+    background-repeat: no-repeat;
+    background-position: center top;
+    vertical-align: bottom;
+}
+
+.payments-slice-2 {
+    background: url('../images/estox/2:3-Slice-big.svg');
+    width: 56px;
+    height: 56px;
+    background-repeat: no-repeat;
+    background-position: top;
+    vertical-align: bottom;
+}
+
+.payments-slice-3 {
+    background: url('../images/estox/3:3-Slice-big.svg');
+    width: 56px;
+    height: 56px;
+    background-repeat: no-repeat;
+    background-position: center top;
+    vertical-align: bottom;
+}
+
+.divider {
+    background: url('../images/estox/Line-big.svg');
+    background-repeat: no-repeat;
+    background-position: top;
+    padding: 0px 14px;
+}
+
+.payment-method-content.estox .table {
+    display: table;
+    width: 78%;
+    padding: 0 11%;
+    margin-top: 60px;
+    margin-bottom: 20px;
+}
+
+@media (max-width: 440px) {
+    .payment-method-content.estox .table {
+        width: 100%;
+        padding: 0 0;
+    }
+}
+
+@media (max-width: 320px) {
+    .payment-method-content.estox .divider {
+        width: 12%;
+    }
+}
+
+.payment-method-content.estox .table-row {
+    display: table-row;
+}
+
+.esto-images {
+    display: table-cell;
+    height: 140px;
+    width: 65px;
+}
+
+.payment-x-block .price {
+    line-height: 30px;
+    color: #667688;
+    font-size: 12px;
+}
+
+.payment-x-block .price b {
+    color: black;
+    font-weight: 600;
+}

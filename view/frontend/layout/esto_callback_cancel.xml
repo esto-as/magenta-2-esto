@@ -1,0 +1,34 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Zaproo Co.
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the EULA
+ * that is bundled with this package in the file LICENSE.txt.
+ *
+ * =================================================================
+ *                 MAGENTO EDITION USAGE NOTICE
+ * =================================================================
+ * This package designed for Magento COMMUNITY edition
+ * Zaproo does not guarantee correct work of this extension
+ * on any other Magento edition except Magento COMMUNITY edition.
+ * Zaproo does not provide extension support in case of
+ * incorrect edition usage.
+ * =================================================================
+ *
+ * @category   Zaproo
+ * @package    Esto_HirePurchase
+ * @version    1.0.2
+ * @copyright  Copyright (c) Zaproo Co. (http://www.zaproo.com)
+ */
+-->
+
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" layout="1column" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <body>
+        <referenceContainer name="content">
+            <block name="esto-order-cancel-info" class="Magento\Framework\View\Element\Template" template="Esto_HirePurchase::order_cancel_info.phtml"/>
+        </referenceContainer>
+    </body>
+</page>

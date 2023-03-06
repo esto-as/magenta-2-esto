@@ -1,0 +1,186 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Zaproo Co.
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the EULA
+ * that is bundled with this package in the file LICENSE.txt.
+ *
+ * =================================================================
+ *                 MAGENTO EDITION USAGE NOTICE
+ * =================================================================
+ * This package designed for Magento COMMUNITY edition
+ * Zaproo does not guarantee correct work of this extension
+ * on any other Magento edition except Magento COMMUNITY edition.
+ * Zaproo does not provide extension support in case of
+ * incorrect edition usage.
+ * =================================================================
+ *
+ * @category   Zaproo
+ * @package    Esto_HirePurchase
+ * @version    1.0.2
+ * @copyright  Copyright (c) Zaproo Co. (http://www.zaproo.com)
+ */
+-->
+
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store:etc/config.xsd">
+    <default>
+        <payment>
+            <esto_hirepurchase>
+                <debug>0</debug>
+                <active>0</active>
+                <payment_action>order</payment_action>
+                <model>EstoPaymentGatewayFacade</model>
+                <order_status>pending</order_status>
+                <title>ESTO hire purchase</title>
+                <description><![CDATA[Confirm a purchase in 60 seconds and pay in installments, conveniently and quickly. Just pay later!]]></description>
+                <currency>EUR</currency>
+                <can_initialize>1</can_initialize>
+                <secret_key backend_model="Magento\Config\Model\Config\Backend\Encrypted"/>
+                <estonian_custom>0</estonian_custom>
+                <estonian_secret_key backend_model="Magento\Config\Model\Config\Backend\Encrypted"/>
+                <lithuanian_custom>0</lithuanian_custom>
+                <lithuanian_secret_key backend_model="Magento\Config\Model\Config\Backend\Encrypted"/>
+                <latvian_custom>0</latvian_custom>
+                <latvian_secret_key backend_model="Magento\Config\Model\Config\Backend\Encrypted"/>
+                <can_use_checkout>1</can_use_checkout>
+                <automatic_invoice>1</automatic_invoice>
+                <monthly_payment_block_is_active>0</monthly_payment_block_is_active>
+                <monthly_payment_block_title><![CDATA[Monthly payment from &euro;%summa%]]></monthly_payment_block_title>
+                <min_order_total>0.1</min_order_total>
+                <max_order_total>10000</max_order_total>
+                <mode>live</mode>
+                <request_endpoint><![CDATA[https://api.esto.ee/v2/purchase/redirect]]></request_endpoint>
+                <paymentInfoKeys>id,purchase_url,connection_mode,status</paymentInfoKeys>
+                <privateInfoKeys>id,purchase_url,connection_mode,status</privateInfoKeys>
+                <retain>1</retain>
+                <countries_status>0</countries_status>
+                <countries>EE,LT,LV</countries>
+            </esto_hirepurchase>
+            <esto_pay_later>
+                <active>0</active>
+                <model>EstoPaymentGatewayFacadePayLater</model>
+                <title><![CDATA[Buy now and pay later!]]></title>
+                <description><![CDATA[Just confirm your order with 3 clicks and take your time! Pay later, within 30 days, without any extra fees!]]></description>
+                <min_order_total>0</min_order_total>
+                <max_order_total>10000</max_order_total>
+                <payment_action>order</payment_action>
+                <order_status>pending</order_status>
+                <currency>EUR</currency>
+                <can_initialize>1</can_initialize>
+                <secret_key backend_model="Magento\Config\Model\Config\Backend\Encrypted"/>
+                <estonian_custom>0</estonian_custom>
+                <estonian_secret_key backend_model="Magento\Config\Model\Config\Backend\Encrypted"/>
+                <lithuanian_custom>0</lithuanian_custom>
+                <lithuanian_secret_key backend_model="Magento\Config\Model\Config\Backend\Encrypted"/>
+                <latvian_custom>0</latvian_custom>
+                <latvian_secret_key backend_model="Magento\Config\Model\Config\Backend\Encrypted"/>
+                <can_use_checkout>1</can_use_checkout>
+                <automatic_invoice>1</automatic_invoice>
+                <monthly_payment_block_is_active>0</monthly_payment_block_is_active>
+                <monthly_payment_block_title><![CDATA[Monthly payment from &euro;%summa%]]></monthly_payment_block_title>
+                <mode>live</mode>
+                <request_endpoint><![CDATA[https://api.esto.ee/v2/purchase/redirect]]></request_endpoint>
+                <paymentInfoKeys>id,purchase_url,connection_mode,status</paymentInfoKeys>
+                <privateInfoKeys>id,purchase_url,connection_mode,status</privateInfoKeys>
+                <retain>1</retain>
+                <countries_status>0</countries_status>
+                <countries>EE,LT,LV</countries>
+            </esto_pay_later>
+            <esto_x>
+                <active>0</active>
+                <model>EstoPaymentGatewayFacadeX</model>
+                <min_order_total>60</min_order_total>
+                <max_order_total>10000</max_order_total>
+                <title>Pay 3 in equal parts. At no extra charge.</title>
+                <calculator>0</calculator>
+                <description><![CDATA[ESTO 3 - pay without additional cost within 3 months! Just pay later.]]></description>
+                <payment_action>order</payment_action>
+                <order_status>pending</order_status>
+                <currency>EUR</currency>
+                <can_initialize>1</can_initialize>
+                <secret_key backend_model="Magento\Config\Model\Config\Backend\Encrypted"/>
+                <estonian_custom>0</estonian_custom>
+                <estonian_secret_key backend_model="Magento\Config\Model\Config\Backend\Encrypted"/>
+                <lithuanian_custom>0</lithuanian_custom>
+                <lithuanian_secret_key backend_model="Magento\Config\Model\Config\Backend\Encrypted"/>
+                <latvian_custom>0</latvian_custom>
+                <latvian_secret_key backend_model="Magento\Config\Model\Config\Backend\Encrypted"/>
+                <can_use_checkout>1</can_use_checkout>
+                <automatic_invoice>1</automatic_invoice>
+                <mode>live</mode>
+                <request_endpoint><![CDATA[https://api.esto.ee/v2/purchase/redirect]]></request_endpoint>
+                <paymentInfoKeys>id,purchase_url,connection_mode,status</paymentInfoKeys>
+                <privateInfoKeys>id,purchase_url,connection_mode,status</privateInfoKeys>
+                <retain>1</retain>
+                <countries_status>0</countries_status>
+                <countries>EE,LT,LV</countries>
+            </esto_x>
+            <esto_pay>
+                <active>0</active>
+                <model>EstoPaymentGatewayFacadePay</model>
+                <min_order_total>60</min_order_total>
+                <max_order_total>10000</max_order_total>
+                <title>Pay in the bank</title>
+                <description><![CDATA[Payment is made using a secure payment solution called KEVIN (UAB “KEVIN EU”), which is licensed by the Bank of Lithuania.]]></description>
+                <payment_action>order</payment_action>
+                <order_status>pending</order_status>
+                <currency>EUR</currency>
+                <can_initialize>1</can_initialize>
+                <secret_key backend_model="Magento\Config\Model\Config\Backend\Encrypted"/>
+                <estonian_custom>0</estonian_custom>
+                <estonian_secret_key backend_model="Magento\Config\Model\Config\Backend\Encrypted"/>
+                <lithuanian_custom>0</lithuanian_custom>
+                <lithuanian_secret_key backend_model="Magento\Config\Model\Config\Backend\Encrypted"/>
+                <latvian_custom>0</latvian_custom>
+                <latvian_secret_key backend_model="Magento\Config\Model\Config\Backend\Encrypted"/>
+                <can_use_checkout>1</can_use_checkout>
+                <automatic_invoice>1</automatic_invoice>
+                <monthly_payment_block_is_active>0</monthly_payment_block_is_active>
+                <monthly_payment_block_title><![CDATA[Monthly payment from &euro;%summa%]]></monthly_payment_block_title>
+                <mode>live</mode>
+                <show_banks>1</show_banks>
+                <banks_columns>2</banks_columns>
+                <request_endpoint><![CDATA[https://api.esto.ee/v2/purchase/redirect]]></request_endpoint>
+                <api_url><![CDATA[https://api.esto.ee/v2/]]></api_url>
+                <paymentInfoKeys>id,purchase_url,connection_mode,status</paymentInfoKeys>
+                <privateInfoKeys>id,purchase_url,connection_mode,status</privateInfoKeys>
+                <specific_countries>EE,LT,LV</specific_countries>
+                <retain>1</retain>
+                <countries_status>0</countries_status>
+                <countries>EE,LT,LV</countries>
+            </esto_pay>
+            <esto_pay_card>
+                <active>0</active>
+                <model>EstoPaymentGatewayFacadeCard</model>
+                <title>Pay by card (Visa/Mastercard)</title>
+                <description><![CDATA[Payment is made using a secure payment solution.]]></description>
+                <payment_action>order</payment_action>
+                <order_status>pending</order_status>
+                <currency>EUR</currency>
+                <can_initialize>1</can_initialize>
+                <secret_key backend_model="Magento\Config\Model\Config\Backend\Encrypted"/>
+                <estonian_custom>0</estonian_custom>
+                <estonian_secret_key backend_model="Magento\Config\Model\Config\Backend\Encrypted"/>
+                <lithuanian_custom>0</lithuanian_custom>
+                <lithuanian_secret_key backend_model="Magento\Config\Model\Config\Backend\Encrypted"/>
+                <latvian_custom>0</latvian_custom>
+                <latvian_secret_key backend_model="Magento\Config\Model\Config\Backend\Encrypted"/>
+                <can_use_checkout>1</can_use_checkout>
+                <automatic_invoice>1</automatic_invoice>
+                <monthly_payment_block_is_active>0</monthly_payment_block_is_active>
+                <monthly_payment_block_title><![CDATA[Monthly payment from &euro;%summa%]]></monthly_payment_block_title>
+                <mode>live</mode>
+                <request_endpoint><![CDATA[https://api.esto.ee/v2/purchase/redirect]]></request_endpoint>
+                <paymentInfoKeys>id,purchase_url,connection_mode,status</paymentInfoKeys>
+                <privateInfoKeys>id,purchase_url,connection_mode,status</privateInfoKeys>
+                <specific_countries>EE,LT,LV</specific_countries>
+                <retain>1</retain>
+                <countries_status>0</countries_status>
+                <countries>EE,LT,LV</countries>
+            </esto_pay_card>
+        </payment>
+    </default>
+</config>
