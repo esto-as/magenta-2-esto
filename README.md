@@ -12,4 +12,4 @@
   
 ## Requirements
 
-The module requires Magento 2.1+.
+The module requires Magento 2.4+.

@@ -1,5 +1,5 @@
 {
-  "name": "esto/HirePurchase",
+  "name": "esto/hire-purchase",
   "description": "Magento 2 ESTO payments",
   "require": {
     "php": ">=7.4"
