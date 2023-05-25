@@ -12,12 +12,37 @@ use Magento\Payment\Model\Method\Logger;
 
 class EstoClient implements ClientInterface
 {
+
+    /**
+     * @var ClientFactory
+     */
+    private $clientFactory;
+
+    /**
+     * @var Json
+     */
+    protected $json;
+
+    /**
+     * @var Logger
+     */
+    protected $logger;
+
+    /**
+     * @param ClientFactory $clientFactory
+     * @param Json $json
+     * @param Logger $logger
+     */
     public function __construct(
-        private ClientFactory $clientFactory,
-        protected Json        $json,
-        protected Logger      $logger
+        ClientFactory $clientFactory,
+        Json          $json,
+        Logger        $logger
     )
-    {}
+    {
+        $this->clientFactory = $clientFactory;
+        $this->json = $json;
+        $this->logger = $logger;
+    }
 
     /**
      * {inheritdoc}
