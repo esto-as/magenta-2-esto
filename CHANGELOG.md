@@ -29,3 +29,7 @@ CHANGELOG
 * cart is now restored when navigating back from payment page
 * fixed bug when "Use different endpoint for Estonia/Latvia/Lithuania" was disabled but its API keys still affected validation
 * checkout calculator for Esto X is now could be enabled or disabled on configuration page
+
+===== 1.1.0 =====
+
+* fixed error with deprecated Zend for Magento 2.4.6

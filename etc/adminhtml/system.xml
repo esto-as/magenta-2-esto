@@ -261,7 +261,7 @@
                     <comment>Show or hide countries</comment>
                 </field>
 
-                <field id="countries" translate="label" type="multiselect" sortOrder="110" showInDefault="1" showInWebsite="1" showInStore="0" canRestore="1">
+                <field id="countries" translate="label" type="multiselect" sortOrder="110" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
                     <label>Enable payment only for countries</label>
                     <source_model>Magento\Directory\Model\Config\Source\Country</source_model>
                     <depends>
@@ -356,7 +356,7 @@
                         <config_path>payment/esto_x/countries_status</config_path>
                     </field>
 
-                    <field id="countries" translate="label" type="multiselect" sortOrder="120" showInDefault="1" showInWebsite="1" showInStore="0" canRestore="1">
+                    <field id="countries" translate="label" type="multiselect" sortOrder="120" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
                         <label>Enable payment only for countries</label>
                         <source_model>Magento\Directory\Model\Config\Source\Country</source_model>
                         <depends>
@@ -447,7 +447,7 @@
                         <config_path>payment/esto_pay_later/countries_status</config_path>
                     </field>
 
-                    <field id="countries" translate="label" type="multiselect" sortOrder="120" showInDefault="1" showInWebsite="1" showInStore="0" canRestore="1">
+                    <field id="countries" translate="label" type="multiselect" sortOrder="120" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
                         <label>Enable payment only for countries</label>
                         <source_model>Magento\Directory\Model\Config\Source\Country</source_model>
                         <depends>
@@ -551,7 +551,7 @@
                         <config_path>payment/esto_pay/countries_status</config_path>
                     </field>
 
-                    <field id="countries" translate="label" type="multiselect" sortOrder="132" showInDefault="1" showInWebsite="1" showInStore="0" canRestore="1">
+                    <field id="countries" translate="label" type="multiselect" sortOrder="132" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
                         <label>Enable payment only for countries</label>
                         <source_model>Magento\Directory\Model\Config\Source\Country</source_model>
                         <depends>
@@ -619,7 +619,7 @@
                         <config_path>payment/esto_pay_card/countries_status</config_path>
                     </field>
 
-                    <field id="countries" translate="label" type="multiselect" sortOrder="120" showInDefault="1" showInWebsite="1" showInStore="0" canRestore="1">
+                    <field id="countries" translate="label" type="multiselect" sortOrder="120" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
                         <label>Enable payment only for countries</label>
                         <source_model>Magento\Directory\Model\Config\Source\Country</source_model>
                         <depends>
