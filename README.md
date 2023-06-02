@@ -1,14 +1,6 @@
 # Esto Payment integration
 
-## Composer installation
-
-* From command line as a Magento root filesystem owner run the following commands:
-  * `composer config repositories.magento-2-esto vcs https://github.com/esto-as/magento-2-esto` (to add the ESTO repository to your composer)
-  * `composer require esto-as/hire-purchase:2.4.x-dev` (to require last 2.4 plugin version).
-  * `composer install` to instal module
-  * `php bin/magento setup:upgrade`  (to update the database and setup the system)
-
-## Direct installation
+## Installation
 
 * Put the module code to your Magento root directory so the full path is `app/code/Esto/HirePurchase`.
 * From command line as a Magento root filesystem owner run the following commands:
@@ -20,4 +12,4 @@
   
 ## Requirements
 
-The module requires Magento 2.4+.
+The module requires Magento 2.1+.

@@ -26,6 +26,7 @@
 namespace Esto\HirePurchase\Controller\Callback;
 
 use Esto\HirePurchase\Logger\Logger;
+use Esto\HirePurchase\Model\Ui\ConfigProvider as EstoConfigProvider;
 use Magento\Checkout\Helper\Data as CheckoutHelper;
 use Magento\Framework\App\Action\Action;
 use Magento\Framework\App\Action\Context;
@@ -128,14 +129,44 @@ class Cancel extends Action implements CsrfAwareActionInterface
         try {
             $this->logger->info(json_encode($estoRequest));
             if (is_array($estoRequest) && isset($estoRequest['json']) && isset($estoRequest['mac'])) {
-                // Validate Esto request
-                $this->helper->validateMac($estoRequest);
                 $estoRequest['json'] = @json_decode($estoRequest['json'], true);
                 if (!is_array($estoRequest['json'])) {
                     throw new \Exception;
                 }
-
                 $order = $this->orderFactory->create()->loadByIncrementId($estoRequest['json']['reference']);
+
+                $customCountrySelector = "";
+                if(in_array(
+                    $order->getPayment()->getData('method'),
+                    array(EstoConfigProvider::CODE,
+                        EstoConfigProvider::CODE_PAY_LATER,
+                        EstoConfigProvider::CODE_X,
+                        EstoConfigProvider::CODE_PAY,
+                        EstoConfigProvider::CODE_PAY_CARD
+                    )
+                )){
+                    $customCountrySelector = null;
+                    if (isset(\Esto\HirePurchase\Gateway\Http\TransferFactory::CONFIG_CUSTOM[$order->getBillingAddress()->getCountryId()])) {
+                        $configPath = \Esto\HirePurchase\Gateway\Http\TransferFactory::CONFIG_CUSTOM[$order->getBillingAddress()->getCountryId()]['config'];
+                        $customCountry = $this->scopeConfig->getValue(
+                            'payment/' . EstoConfigProvider::CODE . '/' . $configPath,
+                            ScopeInterface::SCOPE_WEBSITE
+                        );
+                        if ($customCountry) $customCountrySelector = $order->getBillingAddress()->getCountryId();
+                    }
+                    if (!$customCountrySelector){
+                        if (isset($order->getPayment()->getData()['additional_information'])) {
+                            $paymentData = $order->getPayment()->getData()['additional_information'];
+                            if (isset($paymentData['payment_method_key'])) {
+                                $customCountry = $this->helper->getCountry($paymentData['payment_method_key']);
+                                if ($customCountry) $customCountrySelector = $customCountry;
+                            }
+                        }
+                    }
+                }
+
+                // Validate Esto request
+                $this->helper->validateMac($estoRequest, $customCountrySelector);
 
                 if (!$order->getId()) {
                     throw new \Exception;
