@@ -32,4 +32,9 @@ CHANGELOG
 
 ===== 1.1.0 =====
 
-* fixed error with deprecated Zend for Magento 2.4.6
+* separate module for M 2.4.6
+* changed deprecated Zend client to Guzzle client
+
+===== 1.1.1 =====
+
+* fixed bug with using different endpoints for getting 'available payment methods' request

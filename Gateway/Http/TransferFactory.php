@@ -26,6 +26,7 @@
 namespace Esto\HirePurchase\Gateway\Http;
 
 use Esto\HirePurchase\Helper\Data as EstoHelper;
+use Esto\HirePurchase\Helper\ConfigProvider as ConfigProvider;
 use Magento\Payment\Gateway\Http\TransferBuilder;
 use Magento\Payment\Gateway\Http\TransferFactoryInterface;
 use Magento\Payment\Gateway\ConfigInterface;
@@ -34,7 +35,6 @@ class TransferFactory implements TransferFactoryInterface
 {
     const CONFIG_AUTH_USERNAME = 'shop_id';
     const CONFIG_AUTH_PASSWORD = 'secret_key';
-    const CONFIG_REQUEST_ENDPOINT = 'request_endpoint';
     const CONFIG_CUSTOM = [
         "EE" => [
             'config' => 'estonian_custom',
@@ -64,6 +64,7 @@ class TransferFactory implements TransferFactoryInterface
      */
     protected $helper;
 
+    protected $configProvider;
     /**
      * @var TransferBuilder
      */
@@ -82,10 +83,12 @@ class TransferFactory implements TransferFactoryInterface
     public function __construct(
         TransferBuilder $transferBuilder,
         ConfigInterface $config,
+        ConfigProvider $configProvider,
         EstoHelper $helper
     ) {
         $this->transferBuilder = $transferBuilder;
         $this->config = $config;
+        $this->configProvider = $configProvider;
         $this->helper = $helper;
     }
 
@@ -97,7 +100,7 @@ class TransferFactory implements TransferFactoryInterface
         $storeId = isset($request['store_id']) ? $request['store_id'] : null;
         unset($request['store_id']);
 
-        $estoUrl = $this->config->getValue(self::CONFIG_REQUEST_ENDPOINT, $storeId);
+        $estoUrl = $this->configProvider->getApiUrl();
         $estoUserName = $this->config->getValue(self::CONFIG_AUTH_USERNAME, $storeId);
         $estoPassword = $this->config->getValue(self::CONFIG_AUTH_PASSWORD, $storeId);
 

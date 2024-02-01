@@ -5,7 +5,4 @@
     <event name="checkout_submit_all_after">
         <observer name="remain_active_cart" instance="Esto\HirePurchase\Observer\RemainActiveCart" />
     </event>
-    <event name="payment_method_is_active">
-        <observer name="Esto_Method_Is_Active" instance="Esto\HirePurchase\Observer\PaymentMethodIsActive" />
-    </event>
 </config>

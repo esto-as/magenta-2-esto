@@ -52,7 +52,7 @@
                 <min_order_total>0.1</min_order_total>
                 <max_order_total>10000</max_order_total>
                 <mode>live</mode>
-                <request_endpoint><![CDATA[https://api.esto.ee/v2/purchase/redirect]]></request_endpoint>
+                <request_endpoint>EE</request_endpoint>
                 <paymentInfoKeys>id,purchase_url,connection_mode,status</paymentInfoKeys>
                 <privateInfoKeys>id,purchase_url,connection_mode,status</privateInfoKeys>
                 <retain>1</retain>
@@ -82,7 +82,7 @@
                 <monthly_payment_block_is_active>0</monthly_payment_block_is_active>
                 <monthly_payment_block_title><![CDATA[Monthly payment from &euro;%summa%]]></monthly_payment_block_title>
                 <mode>live</mode>
-                <request_endpoint><![CDATA[https://api.esto.ee/v2/purchase/redirect]]></request_endpoint>
+                <request_endpoint>EE</request_endpoint>
                 <paymentInfoKeys>id,purchase_url,connection_mode,status</paymentInfoKeys>
                 <privateInfoKeys>id,purchase_url,connection_mode,status</privateInfoKeys>
                 <retain>1</retain>
@@ -111,7 +111,7 @@
                 <can_use_checkout>1</can_use_checkout>
                 <automatic_invoice>1</automatic_invoice>
                 <mode>live</mode>
-                <request_endpoint><![CDATA[https://api.esto.ee/v2/purchase/redirect]]></request_endpoint>
+                <request_endpoint>EE</request_endpoint>
                 <paymentInfoKeys>id,purchase_url,connection_mode,status</paymentInfoKeys>
                 <privateInfoKeys>id,purchase_url,connection_mode,status</privateInfoKeys>
                 <retain>1</retain>
@@ -143,8 +143,7 @@
                 <mode>live</mode>
                 <show_banks>1</show_banks>
                 <banks_columns>2</banks_columns>
-                <request_endpoint><![CDATA[https://api.esto.ee/v2/purchase/redirect]]></request_endpoint>
-                <api_url><![CDATA[https://api.esto.ee/v2/]]></api_url>
+                <request_endpoint>EE</request_endpoint>
                 <paymentInfoKeys>id,purchase_url,connection_mode,status</paymentInfoKeys>
                 <privateInfoKeys>id,purchase_url,connection_mode,status</privateInfoKeys>
                 <specific_countries>EE,LT,LV</specific_countries>
@@ -173,7 +172,7 @@
                 <monthly_payment_block_is_active>0</monthly_payment_block_is_active>
                 <monthly_payment_block_title><![CDATA[Monthly payment from &euro;%summa%]]></monthly_payment_block_title>
                 <mode>live</mode>
-                <request_endpoint><![CDATA[https://api.esto.ee/v2/purchase/redirect]]></request_endpoint>
+                <request_endpoint>EE</request_endpoint>
                 <paymentInfoKeys>id,purchase_url,connection_mode,status</paymentInfoKeys>
                 <privateInfoKeys>id,purchase_url,connection_mode,status</privateInfoKeys>
                 <specific_countries>EE,LT,LV</specific_countries>
