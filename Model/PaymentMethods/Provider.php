@@ -92,7 +92,7 @@ class Provider
     {
         $mode = $this->configProvider->getMode();
 
-        return $mode === "test" ? true : false;
+        return $mode === "test" ? 1 : 0;
     }
 
     /**
@@ -110,7 +110,7 @@ class Provider
      */
     private function getApiUrl(): string
     {
-        return $this->configProvider->getApiUrl();
+        return $this->configProvider->getApiUrl(ConfigProvider::AVAILABLE_PAYMENT_METHODS);
     }
 
     /**
@@ -121,9 +121,9 @@ class Provider
      */
     private function getAvailablePayments($countryCode, $token, $mode)
     {
-        $url = $this->getApiUrl() . self::SERVICE;
+        $url = $this->getApiUrl();
         $curl = curl_init();
-        curl_setopt($curl, CURLOPT_URL, $url . '/payment-methods?country_code=' . $countryCode . '&test_mode=' . $mode);
+        curl_setopt($curl, CURLOPT_URL, $url . '?country_code=' . $countryCode . '&test_mode=' . $mode);
         $headers = [
             'Accept: application/json',
             'Content-Type: application/json',

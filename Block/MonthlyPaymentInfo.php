@@ -1,27 +1,4 @@
 <?php
-/**
- * Zaproo Co.
- *
- * NOTICE OF LICENSE
- *
- * This source file is subject to the EULA
- * that is bundled with this package in the file LICENSE.txt.
- *
- * =================================================================
- *                 MAGENTO EDITION USAGE NOTICE
- * =================================================================
- * This package designed for Magento COMMUNITY edition
- * Zaproo does not guarantee correct work of this extension
- * on any other Magento edition except Magento COMMUNITY edition.
- * Zaproo does not provide extension support in case of
- * incorrect edition usage.
- * =================================================================
- *
- * @category   Zaproo
- * @package    Esto_HirePurchase
- * @version    1.0.8
- * @copyright  Copyright (c) Zaproo Co. (http://www.zaproo.com)
- */
 
 namespace Esto\HirePurchase\Block;
 
@@ -33,19 +10,26 @@ use Magento\Catalog\Pricing\Price\FinalPrice;
 use Magento\Framework\HTTP\ZendClientFactory;
 use Magento\Store\Model\ScopeInterface;
 use Esto\HirePurchase\Model\Ui\ConfigProvider;
+use Esto\HirePurchase\Model\OperatingCache;
+use Magento\Framework\Serialize\SerializerInterface;
 
 class MonthlyPaymentInfo extends Template
 {
     const ESTO_CALCULATE_ENDPOINT = 'https://api.esto.ee/v2/calculate/payments';
     const DEFAULT_TITLE = 'Monthly payment from &euro;%summa%';
     const TITLE_PLACEHOLDER = '%summa%';
+    const MONTHLY_PAYMENT_ESTO_FIELD = 'monthly_payment';
+    const CONFIG_PATH_MONTHLY_PAYMENT_BLOCK_TEXT = 'payment/' . ConfigProvider::CODE . '/monthly_payment_block_title';
+    const CONFIG_PATH_MIN_ORDER_TOTAL = 'payment/' . ConfigProvider::CODE . '/min_order_total';
+    const CONFIG_PATH_LOGO = 'payment/' . ConfigProvider::CODE . '/monthly_payment_block_logo';
+    const CONFIG_PATH_REDIRECT_URL = 'payment/' . ConfigProvider::CODE . '/monthly_payment_block_url';
+    const CONFIG_PATH_BLOCK_ACTIVE = 'payment/' . ConfigProvider::CODE . '/monthly_payment_block_is_active';
+    const CONFIG_SHOP_ID = 'payment/' . ConfigProvider::CODE . '/shop_id';
 
-    const CONFIG_PATH_MONTHLY_PAYMENT_BLOCK_TEXT = 'payment/'.ConfigProvider::CODE.'/monthly_payment_block_title';
-    const CONFIG_PATH_MIN_ORDER_TOTAL = 'payment/'.ConfigProvider::CODE.'/min_order_total';
-    const CONFIG_PATH_LOGO = 'payment/'.ConfigProvider::CODE.'/monthly_payment_block_logo';
-    const CONFIG_PATH_REDIRECT_URL = 'payment/'.ConfigProvider::CODE.'/monthly_payment_block_url';
-    const CONFIG_PATH_BLOCK_ACTIVE = 'payment/'.ConfigProvider::CODE.'/monthly_payment_block_is_active';
-    const CONFIG_SHOP_ID = 'payment/'.ConfigProvider::CODE.'/shop_id';
+    /**
+     * @var OperatingCache
+     */
+    private $operatingCache;
 
     /**
      * @var Registry
@@ -63,24 +47,35 @@ class MonthlyPaymentInfo extends Template
     private $configProvider;
 
     /**
-     * @param Template\Context  $context
-     * @param Registry          $registry
+     * @var SerializerInterface
+     */
+    private $serializer;
+
+    /**
+     * @param Template\Context $context
+     * @param Registry $registry
      * @param ZendClientFactory $clientFactory
-     * @param ConfigProvider    $configProvider
-     * @param array             $data
+     * @param ConfigProvider $configProvider
+     * @param OperatingCache $operatingCache
+     * @param SerializerInterface $serializer
+     * @param array $data
      */
     public function __construct(
-        Template\Context $context,
-        Registry $registry,
-        ZendClientFactory $clientFactory,
-        ConfigProvider $configProvider,
-        array $data = []
+        Template\Context    $context,
+        Registry            $registry,
+        ZendClientFactory       $clientFactory,
+        ConfigProvider      $configProvider,
+        OperatingCache      $operatingCache,
+        SerializerInterface $serializer,
+        array               $data = []
     )
     {
         parent::__construct($context, $data);
         $this->registry = $registry;
         $this->clientFactory = $clientFactory;
         $this->configProvider = $configProvider;
+        $this->operatingCache = $operatingCache;
+        $this->serializer = $serializer;
     }
 
     /**
@@ -97,28 +92,45 @@ class MonthlyPaymentInfo extends Template
         if ($product) {
             $priceModel = $product->getPriceInfo()->getPrice(FinalPrice::PRICE_CODE);
             $productMinimalFinalPrice = $priceModel->getValue();
-            $paymentMethodMinOrderTotal = (float)$this->_scopeConfig->getValue(self::CONFIG_PATH_MIN_ORDER_TOTAL, ScopeInterface::SCOPE_WEBSITE);
+            $paymentMethodMinOrderTotal = (float)$this->_scopeConfig->getValue(
+                self::CONFIG_PATH_MIN_ORDER_TOTAL,
+                ScopeInterface::SCOPE_WEBSITE
+            );
+
+            $cache = $this->operatingCache->loadCache();
+            $cached = $cache->checkPrice($productMinimalFinalPrice);
 
             if ($productMinimalFinalPrice && $productMinimalFinalPrice >= $paymentMethodMinOrderTotal) {
-                $client = $this->clientFactory->create();
-                $client->setMethod(); // GET request
-                $client->setUri(self::ESTO_CALCULATE_ENDPOINT);
-                $client->setParameterGet(
-                    array(
-                        'amount' => $productMinimalFinalPrice,
-                        'shop_id' => $this->_scopeConfig->getValue(self::CONFIG_SHOP_ID, ScopeInterface::SCOPE_WEBSITE)
-                    )
-                );
-                try {
-                    $response = $client->request();
-                    $estoPricing = @json_decode($response->getBody(), true);
-                    if (is_array($estoPricing) && isset($estoPricing['monthly_payment'])) {
-                        $resultAmount = (float)$estoPricing['monthly_payment'];
-                    }
-                } catch (\Exception $e) {}
+                $resultAmount = $this->loadAmout($productMinimalFinalPrice);
             }
+            $resultAmount = $cached
+                ?? $cache->getPrice($productMinimalFinalPrice)
+                ?: $cache->setPrice($productMinimalFinalPrice, $resultAmount);
+            $cache->saveCache();
         }
 
+        return $resultAmount;
+    }
+
+    private function loadAmout($productPrice)
+    {
+        $client = $this->clientFactory->create();
+        $client->setMethod(); // GET request
+        $client->setUri(self::ESTO_CALCULATE_ENDPOINT);
+        $client->setParameterGet(
+            [
+                'amount' => $productPrice,
+                'shop_id' => $this->_scopeConfig->getValue(self::CONFIG_SHOP_ID, ScopeInterface::SCOPE_WEBSITE)
+            ]
+        );
+        try {
+            $response = $client->request();
+            $estoPricing =$this->serializer->unserialize($response->getBody());
+            if (is_array($estoPricing) && isset($estoPricing['monthly_payment'])) {
+                $resultAmount = (float)$estoPricing['monthly_payment'];
+            }
+        } catch (\Exception $e) {
+        }
         return $resultAmount;
     }
 
@@ -168,8 +180,8 @@ class MonthlyPaymentInfo extends Template
         static $logoUrl = null;
 
         if (!$logoUrl && $this->_scopeConfig->getValue(self::CONFIG_PATH_LOGO, ScopeInterface::SCOPE_STORE)) {
-            $logoUrl = $this->_storeManager->getStore()->getBaseUrl(UrlInterface::URL_TYPE_MEDIA).
-                ConfigProvider::LOGO_MEDIA_PATH.'/'.$this->_scopeConfig->getValue(self::CONFIG_PATH_LOGO, ScopeInterface::SCOPE_STORE);
+            $logoUrl = $this->_storeManager->getStore()->getBaseUrl(UrlInterface::URL_TYPE_MEDIA) .
+                ConfigProvider::LOGO_MEDIA_PATH . '/' . $this->_scopeConfig->getValue(self::CONFIG_PATH_LOGO, ScopeInterface::SCOPE_STORE);
         } else {
             $logoUrl = $this->configProvider->getLogoUrl(ConfigProvider::CODE);
         }

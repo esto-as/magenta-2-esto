@@ -34,8 +34,8 @@
                 <payment_action>order</payment_action>
                 <model>EstoPaymentGatewayFacade</model>
                 <order_status>pending</order_status>
-                <title>ESTO hire purchase</title>
-                <description><![CDATA[Confirm a purchase in 60 seconds and pay in installments, conveniently and quickly. Just pay later!]]></description>
+                <title>Pay conveniently and quickly in installments - 0€ contract fee!</title>
+                <description><![CDATA[ESTO hire-purchase ensures provision of the service as quickly and conveniently as when paying via a bank link. Confirm the order and, to review your personal terms and conditions and make a successful purchase, sign the hire purchase agreement digitally using your ID card, Smart-ID or Mobile ID.]]></description>
                 <currency>EUR</currency>
                 <can_initialize>1</can_initialize>
                 <secret_key backend_model="Magento\Config\Model\Config\Backend\Encrypted"/>
@@ -52,7 +52,7 @@
                 <min_order_total>0.1</min_order_total>
                 <max_order_total>10000</max_order_total>
                 <mode>live</mode>
-                <request_endpoint><![CDATA[https://api.esto.ee/v2/purchase/redirect]]></request_endpoint>
+                <request_endpoint>EE</request_endpoint>
                 <paymentInfoKeys>id,purchase_url,connection_mode,status</paymentInfoKeys>
                 <privateInfoKeys>id,purchase_url,connection_mode,status</privateInfoKeys>
                 <retain>1</retain>
@@ -62,8 +62,8 @@
             <esto_pay_later>
                 <active>0</active>
                 <model>EstoPaymentGatewayFacadePayLater</model>
-                <title><![CDATA[Buy now and pay later!]]></title>
-                <description><![CDATA[Just confirm your order with 3 clicks and take your time! Pay later, within 30 days, without any extra fees!]]></description>
+                <title><![CDATA[Buy now, but pay later!]]></title>
+                <description><![CDATA[Confirm the order now, and ESTO will give you 30 additional days for payment. Receive the service and pay at your discretion within the next 30 days without any additional charges! No interest. No additional charges. The payment method is provided and managed by ESTO AS.]]></description>
                 <min_order_total>0</min_order_total>
                 <max_order_total>10000</max_order_total>
                 <payment_action>order</payment_action>
@@ -82,7 +82,7 @@
                 <monthly_payment_block_is_active>0</monthly_payment_block_is_active>
                 <monthly_payment_block_title><![CDATA[Monthly payment from &euro;%summa%]]></monthly_payment_block_title>
                 <mode>live</mode>
-                <request_endpoint><![CDATA[https://api.esto.ee/v2/purchase/redirect]]></request_endpoint>
+                <request_endpoint>EE</request_endpoint>
                 <paymentInfoKeys>id,purchase_url,connection_mode,status</paymentInfoKeys>
                 <privateInfoKeys>id,purchase_url,connection_mode,status</privateInfoKeys>
                 <retain>1</retain>
@@ -94,9 +94,9 @@
                 <model>EstoPaymentGatewayFacadeX</model>
                 <min_order_total>60</min_order_total>
                 <max_order_total>10000</max_order_total>
-                <title>Pay 3 in equal parts. At no extra charge.</title>
+                <title>Pay in 3 equal parts. At no extra charge. 0% interest rate. Just pay later!</title>
                 <calculator>0</calculator>
-                <description><![CDATA[ESTO 3 - pay without additional cost within 3 months! Just pay later.]]></description>
+                <description><![CDATA[ESTO 3 payment method allows you to pay for your purchase in three equal instalments over a period of three months. The sum of each monthly instalment is calculated by dividing the value of the shopping cart into three equal parts. No interest. No additional charges. Early repayment option always available, no additional charges apply. The payment method is provided and managed by ESTO AS.]]></description>
                 <payment_action>order</payment_action>
                 <order_status>pending</order_status>
                 <currency>EUR</currency>
@@ -111,7 +111,7 @@
                 <can_use_checkout>1</can_use_checkout>
                 <automatic_invoice>1</automatic_invoice>
                 <mode>live</mode>
-                <request_endpoint><![CDATA[https://api.esto.ee/v2/purchase/redirect]]></request_endpoint>
+                <request_endpoint>EE</request_endpoint>
                 <paymentInfoKeys>id,purchase_url,connection_mode,status</paymentInfoKeys>
                 <privateInfoKeys>id,purchase_url,connection_mode,status</privateInfoKeys>
                 <retain>1</retain>
@@ -124,7 +124,7 @@
                 <min_order_total>60</min_order_total>
                 <max_order_total>10000</max_order_total>
                 <title>Pay in the bank</title>
-                <description><![CDATA[Payment is made using a secure payment solution called KEVIN (UAB “KEVIN EU”), which is licensed by the Bank of Lithuania.]]></description>
+                <description><![CDATA[Payment is made using a secure payment solution called “Klix by Citadele” (AS “Citadele banka”).]]></description>
                 <payment_action>order</payment_action>
                 <order_status>pending</order_status>
                 <currency>EUR</currency>
@@ -143,8 +143,7 @@
                 <mode>live</mode>
                 <show_banks>1</show_banks>
                 <banks_columns>2</banks_columns>
-                <request_endpoint><![CDATA[https://api.esto.ee/v2/purchase/redirect]]></request_endpoint>
-                <api_url><![CDATA[https://api.esto.ee/v2/]]></api_url>
+                <request_endpoint>EE</request_endpoint>
                 <paymentInfoKeys>id,purchase_url,connection_mode,status</paymentInfoKeys>
                 <privateInfoKeys>id,purchase_url,connection_mode,status</privateInfoKeys>
                 <specific_countries>EE,LT,LV</specific_countries>
@@ -156,7 +155,7 @@
                 <active>0</active>
                 <model>EstoPaymentGatewayFacadeCard</model>
                 <title>Pay by card (Visa/Mastercard)</title>
-                <description><![CDATA[Payment is made using a secure payment solution.]]></description>
+                <description><![CDATA[Your payment will be made using a secure payment solution.]]></description>
                 <payment_action>order</payment_action>
                 <order_status>pending</order_status>
                 <currency>EUR</currency>
@@ -173,7 +172,7 @@
                 <monthly_payment_block_is_active>0</monthly_payment_block_is_active>
                 <monthly_payment_block_title><![CDATA[Monthly payment from &euro;%summa%]]></monthly_payment_block_title>
                 <mode>live</mode>
-                <request_endpoint><![CDATA[https://api.esto.ee/v2/purchase/redirect]]></request_endpoint>
+                <request_endpoint>EE</request_endpoint>
                 <paymentInfoKeys>id,purchase_url,connection_mode,status</paymentInfoKeys>
                 <privateInfoKeys>id,purchase_url,connection_mode,status</privateInfoKeys>
                 <specific_countries>EE,LT,LV</specific_countries>

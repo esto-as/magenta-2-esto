@@ -465,7 +465,7 @@
                     <field id="active" translate="label comment" type="select" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
                         <label>Enable Esto Pay</label>
                         <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
-                        <comment><![CDATA[Payment is made using a secure payment solution called KEVIN (UAB “KEVIN EU”), which is licensed by the Bank of Lithuania.]]></comment>
+                        <comment><![CDATA[Payment is made using a secure payment solution called “Klix by Citadele” (AS “Citadele banka”).]]></comment>
                         <config_path>payment/esto_pay/active</config_path>
                     </field>
 
@@ -569,7 +569,7 @@
                     <field id="active" translate="label comment" type="select" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
                         <label>Enable Card payment</label>
                         <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
-                        <comment><![CDATA[Payment is made using a secure payment solution.]]></comment>
+                        <comment><![CDATA[Your payment will be made using a secure payment solution.]]></comment>
                         <config_path>payment/esto_pay_card/active</config_path>
                     </field>
 

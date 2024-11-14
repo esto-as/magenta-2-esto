@@ -144,7 +144,15 @@ define(
             },
 
             isEnabled: function () {
-                return window.checkoutConfig.payment[this.getCode()].enable_terms
+                let isEnabled = window.checkoutConfig.payment[this.getCode()].enable_terms,
+                    result = 'false';
+
+                if (typeof isEnabled === 'undefined' || isEnabled === null){
+                    isEnabled = '0';
+                }
+
+                result = isEnabled === '1' ? 'true' : 'false';
+                return result;
             },
 
             getTermsLabel: function () {

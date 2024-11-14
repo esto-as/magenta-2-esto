@@ -9,7 +9,23 @@ use Magento\Store\Model\ScopeInterface;
 class ConfigProvider
 {
     const SPECIFIC_COUTRIES_PATH = 'payment/esto_pay/specific_countries';
-    const API_URL_PATH = 'payment/esto_pay/api_url';
+    const ENDPOINT_COUNTRY_CONFIG = 'payment/esto_hirepurchase/request_endpoint';
+    const API_ENDPOINTS = [
+        "EE" => "https://api.esto.ee/v2/",
+        "LT" => "https://api.estopay.lt/v2/",
+        "LV" => "https://api.esto.lv/v2/"
+    ];
+    const DEFAULT_COUNTRY_CODE = 'EE';
+    const PURCHASE_REDIRECT = 0;
+    const PURCHASE_WITHOUT_REDIRECT = 1;
+    const AVAILABLE_PAYMENT_METHODS = 2;
+
+    const REQUEST_TYPES = [
+        self::PURCHASE_REDIRECT => "purchase/redirect",
+        self::PURCHASE_WITHOUT_REDIRECT => "purchase/local",
+        self::AVAILABLE_PAYMENT_METHODS => "purchase/payment-methods",
+    ];
+
     const MODE_PATH = 'payment/esto_hirepurchase/mode';
     const SHOP_ID_PATH = 'payment/esto_hirepurchase/shop_id';
     const API_KEY_PATH = 'payment/esto_hirepurchase/secret_key';
@@ -26,7 +42,8 @@ class ConfigProvider
      */
     public function __construct(
         ScopeConfigInterface $scopeConfig
-    ) {
+    )
+    {
         $this->scopeConfig = $scopeConfig;
     }
 
@@ -41,9 +58,22 @@ class ConfigProvider
     /**
      * @return string
      */
-    public function getApiUrl(): string
+    public function getApiUrl($type = self::PURCHASE_REDIRECT): string
     {
-        return $this->scopeConfig->getValue(self::API_URL_PATH, ScopeInterface::SCOPE_STORE);
+        $uri = $this->getApiUri();
+        return $uri . self::REQUEST_TYPES[$type];
+    }
+
+    /**
+     * @return string
+     */
+    public function getApiUri(): string
+    {
+        $countryCode = $this->scopeConfig->getValue(self::ENDPOINT_COUNTRY_CONFIG, ScopeInterface::SCOPE_STORE);
+        if (!$countryCode) {
+            return self::API_ENDPOINTS[self::DEFAULT_COUNTRY_CODE];
+        }
+        return self::API_ENDPOINTS[$countryCode];
     }
 
     /**

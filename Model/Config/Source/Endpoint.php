@@ -10,9 +10,9 @@ class Endpoint implements \Magento\Framework\Option\ArrayInterface
     public function toOptionArray()
     {
         return [
-            ['value' => 'https://api.esto.ee/v2/purchase/redirect', 'label' => 'Estonian'],
-            ['value' => 'https://api.estopay.lt/v2/purchase/redirect', 'label' => 'Lithuanian'],
-            ['value' => 'https://api.esto.lv/v2/purchase/redirect', 'label' => 'Latvian'],
+            ['value' => 'EE', 'label' => 'Estonian'],
+            ['value' => 'LT', 'label' => 'Lithuanian'],
+            ['value' => 'LV', 'label' => 'Latvian'],
         ];
     }
 }

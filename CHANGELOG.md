@@ -33,3 +33,21 @@ CHANGELOG
 ===== 1.0.13 =====
 
 * custom cancel url navigation was fixed
+* fixed bug with using different endpoints for getting 'available payment methods' request
+
+===== 1.0.14 =====
+
+* updated payment method copies
+
+===== 1.0.15 =====
+
+* added caching amount from product calculator
+* fixed klix logos
+
+===== 1.0.16=====
+
+* fixed the terms and conditions conflict 
+
+===== 1.0.17=====
+
+* fixed the bug with terms and conditions at lower Magento versions 

@@ -270,4 +270,7 @@
             </argument>
         </arguments>
     </type>
+    <type name="Magento\CheckoutAgreements\Model\AgreementsValidator">
+        <plugin name="after_agreements_validation" type="Esto\HirePurchase\Model\Checkout\Plugin\AgreementsValidator" sortOrder="10"/>
+    </type>
 </config>
